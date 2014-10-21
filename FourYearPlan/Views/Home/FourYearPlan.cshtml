@@ -1,0 +1,42 @@
+﻿@Scripts.Render("~/bundles/Angular")
+
+@{
+    ViewBag.Title = "FourYearPlan";
+}
+
+<h2>FourYearPlan</h2>
+
+@using (@Html.BeginForm("FourYearPlan", "Home", FormMethod.Post))
+{
+    <div>   
+        <label>Required</label>
+        @Html.ListBox("req", (List<SelectListItem>)ViewBag.req)
+    </div>
+    <div>
+        <label>SE Elective (Choose 2)</label>
+        @Html.ListBox("se", (List<SelectListItem>)ViewBag.se)
+    </div>
+    <div>
+        <label>Tech Elective (Choose 1)</label>
+        @Html.ListBox("tech", (List<SelectListItem>)ViewBag.tech)
+    </div>
+    <div>
+        <label>Math Elective (Choose 1)</label>
+        @Html.ListBox("math", (List<SelectListItem>)ViewBag.math)
+    </div>
+    <div>
+        <label>Suppl Elective (Choose 3)</label>
+        @Html.ListBox("suppl", (List<SelectListItem>)ViewBag.suppl)
+    </div>
+    <div>
+        <label>Econ (Choose 1)</label>
+        @Html.ListBox("econ", (List<SelectListItem>)ViewBag.econ)
+    </div>
+    <div>
+        <label>Gen Ed (Choose 4)</label>
+        @Html.ListBox("gen", (List<SelectListItem>)ViewBag.gen)
+    </div>
+
+
+    <button type="submit">click</button>
+}
