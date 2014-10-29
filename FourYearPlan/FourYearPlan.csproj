@@ -212,6 +212,9 @@
     <Compile Include="User.cs">
       <DependentUpon>database.tt</DependentUpon>
     </Compile>
+    <Compile Include="Users.cs">
+      <DependentUpon>database.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Database.mdf" />
@@ -1095,6 +1098,7 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Home\Result.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -26,6 +26,6 @@ namespace FourYearPlan
         }
     
         public DbSet<Course> Course { get; set; }
-        public DbSet<User> User { get; set; }
+        public DbSet<Users> Users { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace FourYearPlan.Controllers
         private static Course[] courses;
         private static int numOfReq;
         private static string[] breakDown;
-        private static string email;
+        private static string email; //username
         private static bool loggedIn = false;
         private static int cancel = 0;
         private static string canceledClass = "";
@@ -36,15 +36,15 @@ namespace FourYearPlan.Controllers
         public ActionResult Login(string username, string password)
         {
             canceledClass = "";
-            var query = (from b in db.User
-                         where username == b.email
+            var query = (from b in db.Users
+                         where username == b.Email
                          select b).FirstOrDefault();
-            if (query != null && query.password.Equals(password))
+            if (query != null && query.Password.Equals(password))
             {
                 loggedIn = true;
                 email = username;
-                if(query.plan != null){
-                    breakDown = query.plan.Split(new char[] { '\n' });
+                if(query.Plan != null){
+                    breakDown = query.Plan.Split(new char[] { '\n' });
                     checkCanceled();
                     return Redirect("Result");
                 }
@@ -52,6 +52,35 @@ namespace FourYearPlan.Controllers
             }
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Register(string username, string password)
+        {
+           
+            var exists = (from b in db.Users
+                          where username == b.Email
+                          select b).Any();
+            if(exists){
+                //return error
+            }
+    
+            Users u = new Users();
+            u.Email = username;
+            u.Password = password;
+            db.Users.Add(u);
+            db.SaveChanges();
+            loggedIn = true;
+            email = username;
+
+            return Redirect("FourYearPlan");
+        }
+
         [HttpGet]
         public ActionResult FourYearPlan()
         {
@@ -171,10 +200,10 @@ namespace FourYearPlan.Controllers
                 }
                 ret += "\n";
             }
-            var user = (from b in db.User
-                       where b.email == email
+            var user = (from b in db.Users
+                       where b.Email == email
                        select b).FirstOrDefault();
-            user.plan = ret;
+            user.Plan = ret;
             db.SaveChanges();
             breakDown = ret.Split(new char[] { '\n' });
 
