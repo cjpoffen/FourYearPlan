@@ -19,6 +19,7 @@ namespace FourYearPlan.Controllers
         private static bool loggedIn = false;
         private static int cancel = 0;
         private static string canceledClass = "";
+        private static bool admin = false;
 
         public ActionResult Index()
         {
@@ -32,6 +33,7 @@ namespace FourYearPlan.Controllers
         {
             return View();
         }
+        
         [HttpPost]
         public ActionResult Login(string username, string password)
         {
@@ -43,6 +45,10 @@ namespace FourYearPlan.Controllers
             {
                 loggedIn = true;
                 email = username;
+                if(query.Administrator == 1){
+                    admin = true;
+                    return Redirect("Admin");
+                }
                 if(query.Plan != null){
                     breakDown = query.Plan.Split(new char[] { '\n' });
                     checkCanceled();
@@ -50,6 +56,18 @@ namespace FourYearPlan.Controllers
                 }
                 return Redirect("FourYearPlan");
             }
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Admin()
+        {
+            return View();
+        }
+
+        [HttpPut]
+        public ActionResult Admin()
+        {
             return View();
         }
 

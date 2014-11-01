@@ -26,6 +26,7 @@
           <Property Name="Email" Type="varchar(max)" Nullable="false" />
           <Property Name="Password" Type="varchar(max)" Nullable="false" />
           <Property Name="Plan" Type="nvarchar(max)" />
+          <Property Name="Administrator" Type="int" />
         </EntityType>
         <EntityContainer Name="DatabaseModelStoreContainer">
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
@@ -60,6 +61,7 @@
           <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Plan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Administrator" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -84,6 +86,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="DatabaseModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Administrator" ColumnName="Administrator" />
                 <ScalarProperty Name="Plan" ColumnName="Plan" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Email" ColumnName="Email" />

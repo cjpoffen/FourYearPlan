@@ -18,5 +18,6 @@ namespace FourYearPlan
         public string Email { get; set; }
         public string Password { get; set; }
         public string Plan { get; set; }
+        public Nullable<int> Administrator { get; set; }
     }
 }
