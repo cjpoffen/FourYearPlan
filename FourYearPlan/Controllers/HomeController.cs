@@ -12,7 +12,7 @@ namespace FourYearPlan.Controllers
     public class HomeController : Controller
     {
         private static DatabaseEntities db = new DatabaseEntities();
-        private static Course[] courses;
+        private static Course[] courses = null;
         private static int numOfReq;
         private static string[] breakDown;
         private static string email; //username
@@ -62,11 +62,17 @@ namespace FourYearPlan.Controllers
         [HttpGet]
         public ActionResult Admin()
         {
-            return View();
+            if (courses == null)
+            {
+                var query = (from b in db.Course
+                             select b);
+                courses = query.ToArray();
+            }
+            return View(courses);
         }
 
-        [HttpPut]
-        public ActionResult Admin()
+        [HttpPost]
+        public ActionResult EditCourse(int value)
         {
             return View();
         }

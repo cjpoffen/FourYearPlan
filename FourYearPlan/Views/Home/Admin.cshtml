@@ -1,0 +1,45 @@
+﻿@model FourYearPlan.Course[]
+@{
+    ViewBag.Title = "Admin";
+}
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 15px;
+    }
+</style>
+
+<h2>Admin</h2>
+@using (@Html.BeginForm("EditCourse", "Home", FormMethod.Post))
+{
+    <table style="width:100%">
+        <tr>
+            <th>Name</th>
+            <th>Prerequisites</th>
+            <th>Semeser</th>
+        </tr>
+        @foreach (var c in Model    )
+        {
+            <tr>
+                <td>
+                    @c.name
+                </td>
+                <td>
+                    @c.prerequisites
+                </td>
+                <td>
+                    @c.semester
+                </td>
+                <td>
+                    <button name="value" id="@c.Id" value="@c.Id">Modify</button>
+                </td>
+            </tr>
+        }
+    </table>
+
+}
