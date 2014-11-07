@@ -74,7 +74,7 @@ namespace FourYearPlan.Controllers
         [HttpPost]
         public ActionResult EditCourse(int value)
         {
-            return View();
+            return View(courses[value]);
         }
 
         [HttpGet]

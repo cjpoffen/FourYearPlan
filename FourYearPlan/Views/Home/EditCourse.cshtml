@@ -1,0 +1,86 @@
+﻿@model FourYearPlan.Course
+
+@{
+    ViewBag.Title = "EditCourse";
+}
+
+<h2>EditCourse</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Course</legend>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.name)
+            @Html.ValidationMessageFor(model => model.name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.prerequisites)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.prerequisites)
+            @Html.ValidationMessageFor(model => model.prerequisites)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.semester)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.semester)
+            @Html.ValidationMessageFor(model => model.semester)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.numOfPrerequisites)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.numOfPrerequisites)
+            @Html.ValidationMessageFor(model => model.numOfPrerequisites)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cancelled)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Cancelled)
+            @Html.ValidationMessageFor(model => model.Cancelled)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Type)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Type)
+            @Html.ValidationMessageFor(model => model.Type)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.prereqIndex)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.prereqIndex)
+            @Html.ValidationMessageFor(model => model.prereqIndex)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
