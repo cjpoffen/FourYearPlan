@@ -61,20 +61,31 @@ namespace FourYearPlan.Controllers
 
         [HttpGet]
         public ActionResult Admin()
-        {
-            if (courses == null)
-            {
-                var query = (from b in db.Course
-                             select b);
-                courses = query.ToArray();
-            }
+        {   
+            var query = (from b in db.Course
+                         select b);
+            courses = query.ToArray();
+
             return View(courses);
         }
 
         [HttpPost]
-        public ActionResult EditCourse(int value)
+        public ActionResult Admin(int value)
         {
-            return View(courses[value]);
+            return View("EditCourse", courses[value]);
+        }
+
+        [HttpGet]
+        public ActionResult EditCourse()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EditCourse(Course c)
+        {
+            updateCourse(c);
+            return Redirect("Admin");
         }
 
         [HttpGet]
@@ -290,7 +301,47 @@ namespace FourYearPlan.Controllers
                 }
             }
         }
-        
+
+        private void updateCourse(Course updated)
+        {
+            var query = (from b in db.Course
+                         where updated.Id == b.Id
+                         select b).FirstOrDefault();
+
+            query.name = updated.name;
+            query.semester = updated.semester;
+            query.Type = updated.Type;
+            
+            if(query.numOfPrerequisites != updated.numOfPrerequisites && updated.numOfPrerequisites != 0){
+                query.numOfPrerequisites = updated.numOfPrerequisites;
+                string indexs = "";
+                string[] classes = updated.prerequisites.Split(new char[] { ',', ';' });// will create array where last index is ""
+                for (int i = 0; i < classes.Length-1; i++)
+                {
+                    for (int j = 0; j < courses.Length; j++)
+                    {
+                        if (courses[j].name == classes[i])
+                        {
+                            indexs += courses[j].Id + ",";
+                            break;
+                        }
+                    }
+                }
+                indexs = indexs.Substring(0, indexs.Length - 1) + ";";
+                query.prerequisites = updated.prerequisites;
+                query.prereqIndex = indexs;
+            }
+            if (updated.numOfPrerequisites == 0)
+            {
+                query.prerequisites = "";
+                query.prereqIndex = ""; ;
+            }
+
+            query.numOfPrerequisites = updated.numOfPrerequisites;
+            db.SaveChanges();
+            
+        }
+
     }
 }
 
