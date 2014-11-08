@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "SharedPlan";
+}
+
+<h2>SharedPlan</h2>
+
+@using (@Html.BeginForm("Admin", "SharedPlan", FormMethod.Post))
+{
+    <table style="width:100%">
+        <tr>
+            <th>Username</th>   
+        </tr>
+        @foreach (var c in ViewBag.username)
+        {
+            <tr>
+                <td>
+                    @c
+                </td>
+                <td>
+                    <button name="username" id="@c" value="@c">Select</button>
+                </td>
+            </tr>
+        }
+    </table>
+
+}

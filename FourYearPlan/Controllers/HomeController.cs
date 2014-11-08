@@ -271,7 +271,23 @@ namespace FourYearPlan.Controllers
             }
             
             return View();
-        } 
+        }
+
+        [HttpGet]
+        public ActionResult SharedPlan()
+        {
+
+            ViewBag.username = getUsernames();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SharedPlan(string username)
+        {
+            var x = 10;
+            return View();
+        }
+
 
         private Class[] getClasses(Class[] masterList, string[] index)
         {
@@ -340,6 +356,31 @@ namespace FourYearPlan.Controllers
             query.numOfPrerequisites = updated.numOfPrerequisites;
             db.SaveChanges();
             
+        }
+
+        private string[] getUsernames()
+        {
+            var query = (from b in db.Users
+                        where b.Email == email
+                         select b).FirstOrDefault();
+
+            if(query.SharedPlan != null && query.SharedPlan != ""){
+                var index = query.SharedPlan.Split(new char[] { ',', ';' });
+                      
+                string[] us = new string[index.Length - 1];
+
+                for (int i = 0; i < index.Length - 1; i++)
+                {
+                    int id = Int32.Parse(index[i]);
+                    us[i] = (from b in db.Users
+                             where b.Id == id
+                             select b.Email).FirstOrDefault();
+                }
+                return us;
+            }
+            return null;
+
+
         }
 
     }
