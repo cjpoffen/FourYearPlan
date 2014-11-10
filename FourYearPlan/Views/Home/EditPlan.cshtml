@@ -1,0 +1,260 @@
+﻿@{
+    ViewBag.Title = "EditPlan";
+}
+
+<h2>EditPlan</h2>
+
+<form method="POST" name="theForm">
+    <table bgcolor="white" border="1" cellpadding="5" cellspacing="2" align="center">
+        <tr>
+            <td align="center">
+                <div>
+                    <label >Semester One</label>
+                    <select name=FistSemester size=10 multiple>
+                        @foreach (var c in ViewBag.FistSemester)
+                        {
+                            <option>@c</option>
+                        }
+                    </select><br />
+                    <p align="center"><input type="button" onclick="transfer(1,2)" value=" >> "></p>
+                </div>
+            </td>
+            <td align="center">
+                <div>
+                    <label>Semester Two</label>
+                    <select name=SecondSemester size=10 multiple>
+                        @foreach (var c in ViewBag.SecondSemester)
+                        {
+                            <option>@c</option>
+                        }
+                    </select><br />
+                    <div>
+                        <p>
+                            <input type="button" onclick="transfer(2,1)" value=" << ">
+                            <input type="button" onclick="transfer(2,3)" value=" >> "></p>
+                        </p>
+                    </div>
+                </div>
+            </td>
+            <td align="center">
+                <div>
+                    <label>Semester Three</label>
+                    <select name=ThirdSemester size=10 multiple>
+                        @foreach (var c in ViewBag.ThirdSemester)
+                        {
+                            <option>@c</option>
+                        }
+                    </select><br />
+                    <p>
+                        <input type="button" onclick="transfer(3,2)" value=" << ">
+                        <input type="button" onclick="transfer(3,4)" value=" >> ">
+                    </p>
+                    </p>
+                </div>
+            </td>
+            <td align="center">
+                <div>
+                    <label>Semester Four</label>
+                    <select name=ForthSemster size=10 multiple>
+                        @foreach (var c in ViewBag.ForthSemster)
+                        {
+                            <option>@c</option>
+                        }
+                    </select><br />
+                    <p>
+                        <input type="button" onclick="transfer(4,3)" value=" << ">
+                        <input type="button" onclick="transfer(4,5)" value=" >> ">
+                    </p>
+                    </p>
+                </div>
+            </td>
+            <td align="center">
+                <div>
+                    <label>Semester Five</label>
+                    <select name=FifthSemester size=10 multiple>
+                        @foreach (var c in ViewBag.FifthSemester)
+                        {
+                            <option>@c</option>
+                        }
+                    </select><br />
+                    <p>
+                        <input type="button" onclick="transfer(5,4)" value=" << ">
+                        <input type="button" onclick="transfer(5,6)" value=" >> ">
+                    </p>
+                    </p>
+                </div>
+            </td>
+            <td align="center">
+                <div>
+                    <label>Semester Six</label>
+                    <select name=SixthSemester size=10 multiple>
+                        @foreach (var c in ViewBag.SixthSemester)
+                        {
+                            <option>@c</option>
+                        }
+                    </select><br />
+                    <p>
+                        <input type="button" onclick="transfer(6,5)" value=" << ">
+                        <input type="button" onclick="transfer(6,7)" value=" >> ">
+                    </p>
+                    </p>
+                </div>
+            </td>
+            <td align="center">
+                <div>
+                    <label>Semester Seven</label>
+                    <select name=SeventhSemester size=10 multiple>
+                        @foreach (var c in ViewBag.SeventhSemester)
+                        {
+                            <option>@c</option>
+                        }
+                    </select><br />
+                    <p>
+                        <input type="button" onclick="transfer(7,6)" value=" << ">
+                        <input type="button" onclick="transfer(7,8)" value=" >> ">
+                    </p>
+                    </p>
+                </div>
+            </td>
+            <td align="center">
+                <div>
+                    <label>Semester Eight</label>
+                    <select name=EighthSemester size=10 multiple>
+                        @foreach (var c in ViewBag.EighthSemester)
+                        {
+                            <option>@c</option>
+                        }
+                    </select><br />
+                    <p>
+                        <input type="button" onclick="transfer(8,7  )" value=" << ">
+                    </p>
+                    </p>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <button onclick="selectAll()">Save</button>
+</form>
+
+<script language="JavaScript">
+
+    var m1 = document.theForm.FistSemester;
+    var m2 = document.theForm.SecondSemester;
+    var m3 = document.theForm.ThirdSemester;
+    var m4 = document.theForm.ForthSemster;
+    var m5 = document.theForm.FifthSemester;
+    var m6 = document.theForm.SixthSemester;
+    var m7 = document.theForm.SeventhSemester;
+    var m8 = document.theForm.EighthSemester;
+
+    var m1len;
+    var m2len;
+    var m3len;
+    var m4len;
+    var m5len;
+    var m6len;
+    var m7len;
+    var m8len;
+
+    function transfer(from, to) {
+        var f, t;
+
+        switch (from) {
+            case 1:
+                f = m1;
+                break;
+            case 2:
+                f = m2;
+                break;
+            case 3:
+                f = m3;
+                break;
+            case 4:
+                f = m4;
+                break;
+            case 5:
+                f = m5;
+                break;
+            case 6:
+                f = m6;
+                break;
+            case 7:
+                f = m7;
+                break;
+            case 8:
+                f = m8;
+                break;
+        }
+        switch (to) {
+            case 1:
+                t = m1;
+                break;
+            case 2:
+                t = m2;
+                break;
+            case 3:
+                t = m3;
+                break;
+            case 4:
+                t = m4;
+                break;
+            case 5:
+                t = m5;
+                break;
+            case 6:
+                t = m6;
+                break;
+            case 7:
+                t = m7;
+                break;
+            case 8:
+                t = m8;
+                break;
+        }
+
+
+        m2len = f.length;
+        for (i = 0; i < m2len ; i++) {
+            if (f.options[i].selected == true) {
+                t.options[t.length] = new Option(f.options[i].text);
+            }
+        }
+
+        for (i = (m2len - 1) ; i >= 0; i--) {
+            if (f.options[i].selected == true) {
+                f.options[i] = null;
+            }
+        }
+    }
+
+    function selectAll() {
+        
+        for (i=0; i<m1.length; i++) {  
+            m1.options[i].selected = true; 
+        }
+        for (i = 0; i < m2.length; i++) {
+            m2.options[i].selected = true;
+        }
+        for (i = 0; i < m3.length; i++) {
+            m3.options[i].selected = true;
+        }
+        for (i = 0; i < m4.length; i++) {
+            m4.options[i].selected = true;
+        }
+        for (i = 0; i < m5.length; i++) {
+            m5.options[i].selected = true;
+        }
+        for (i = 0; i < m6.length; i++) {
+            m6.options[i].selected = true;
+        }
+        for (i = 0; i < m7.length; i++) {
+            m7.options[i].selected = true;
+        }
+        for (i = 0; i < m8.length; i++) {
+            m8.options[i].selected = true;
+        }
+
+    }
+
+//-->
+</script>

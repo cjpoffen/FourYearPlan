@@ -3,6 +3,13 @@
     ViewBag.Title = "Result";
 }
 
+<ul>
+        <li>@Html.ActionLink("View Plans Shared With You", "SharedPlan", "Home")</li>
+        <li>@Html.ActionLink("Share Your Plan", "sharePlan", "Home")</li>
+        <li>@Html.ActionLink("Edit Your Plan", "EditPlan", "Home")</li>
+</ul>
+
+
 <h2>Result</h2>
 ----------------------------------------------------------------------------------
 <label>1: @ViewBag.first</label>

@@ -1099,6 +1099,9 @@
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Home\EditCourse.cshtml" />
     <Content Include="Views\Home\SharedPlan.cshtml" />
+    <Content Include="Views\Home\Plan.cshtml" />
+    <Content Include="Views\Home\sharePlan.cshtml" />
+    <Content Include="Views\Home\EditPlan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

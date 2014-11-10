@@ -95,25 +95,39 @@ namespace FourYearPlan.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(string username, string password)
+        public ActionResult Register(string username, string password, string admin)
         {
            
             var exists = (from b in db.Users
-                          where username == b.Email
+                          where username.Trim() == b.Email
                           select b).Any();
             if(exists){
                 //return error
             }
-    
-            Users u = new Users();
-            u.Email = username;
-            u.Password = password;
-            db.Users.Add(u);
-            db.SaveChanges();
-            loggedIn = true;
-            email = username;
+            else
+            {
+                Users u = new Users();
+                u.Email = username;
+                u.Password = password;
+                if(admin == "admin"){
+                    u.Administrator = 1;
+                }
+                else
+                {
+                    u.Administrator = 0;
+                }
+                db.Users.Add(u);
+                db.SaveChanges();
+                loggedIn = true;
+                email = username;
+                if(admin != null){
+                    return Redirect("Admin");
+                }
+                return Redirect("FourYearPlan");
+            }
 
-            return Redirect("FourYearPlan");
+            return View();
+            
         }
 
         [HttpGet]
@@ -233,6 +247,7 @@ namespace FourYearPlan.Controllers
                 {
                     ret += (plan[i][j].getName()) + " | ";
                 }
+                ret = ret.Substring(0, ret.Length - 3);
                 ret += "\n";
             }
             var user = (from b in db.Users
@@ -251,6 +266,12 @@ namespace FourYearPlan.Controllers
             if(!loggedIn){
                 return Redirect("Login");
             }
+            var query = (from b in db.Users
+                         where b.Email == email
+                         select b.Plan).FirstOrDefault();
+
+            breakDown = query.Split(new char[] { '\n' });
+            checkCanceled();
 
             ViewBag.first = breakDown[0];
             ViewBag.second = breakDown[1];
@@ -282,12 +303,134 @@ namespace FourYearPlan.Controllers
         }
 
         [HttpPost]
-        public ActionResult SharedPlan(string username)
+        public ActionResult Plan(string username)
         {
-            var x = 10;
+            var query = (from b in db.Users
+                         where b.Email == username
+                         select b.Plan).FirstOrDefault();
+
+            var plan = query.Split(new char[] { '\n' });
+            ViewBag.first = plan[0];
+            ViewBag.second = plan[1];
+            ViewBag.third = plan[2];
+            ViewBag.forth = plan[3];
+            ViewBag.five = plan[4];
+            ViewBag.six = plan[5];
+            ViewBag.seven = plan[6];
+            ViewBag.eight = plan[7];
             return View();
         }
 
+        [HttpGet]
+        public ActionResult sharePlan()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult sharePlan(string username)
+        {
+            var user = (from b in db.Users
+                        where b.Email == username
+                        select b).FirstOrDefault();
+            var id = (from b in db.Users
+                        where b.Email == email
+                        select b.Id).FirstOrDefault();
+
+            if(user.SharedPlan == null || user.SharedPlan == ""){
+                user.SharedPlan = id + ";";
+            }
+            else
+            {
+                user.SharedPlan = user.SharedPlan.Substring(0, user.SharedPlan.Length - 1) + id + ";";
+            }
+            db.SaveChanges();
+            return Redirect("Result");
+        }
+
+        [HttpGet]
+        public ActionResult EditPlan()
+        {
+            var plan = (from b in db.Users
+                            where b.Email == email
+                            select b.Plan).FirstOrDefault();
+            string[] semester = plan.Split(new char[] { '\n' });
+            ViewBag.FistSemester = semester[0].Split(new char[] { '|' });
+            ViewBag.SecondSemester = semester[1].Split(new char[] { '|' });
+            ViewBag.ThirdSemester = semester[2].Split(new char[] { '|' });
+            ViewBag.ForthSemster = semester[3].Split(new char[] { '|' });
+            ViewBag.FifthSemester = semester[4].Split(new char[] { '|' });
+            ViewBag.SixthSemester = semester[5].Split(new char[] { '|' });
+            ViewBag.SeventhSemester = semester[6].Split(new char[] { '|' });
+            ViewBag.EighthSemester = semester[7].Split(new char[] { '|' });
+
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EditPlan(string[] FistSemester, string[] SecondSemester, string[] ThirdSemester,
+                                        string[] ForthSemster, string[] FifthSemester, string[] SixthSemester, 
+                                            string[] SeventhSemester, string[] EighthSemester)
+        {
+            string ret = "";
+            for (int i = 0; i < FistSemester.Length; i++)
+            {
+                ret += FistSemester[i] + " | ";
+            }
+            ret = ret.Substring(0, ret.Length - 3) + "\n";
+
+            for (int i = 0; i < SecondSemester.Length; i++)
+            {
+                ret += SecondSemester[i] + " | ";
+            }
+            ret = ret.Substring(0, ret.Length - 3) + "\n";
+
+            for (int i = 0; i < ThirdSemester.Length; i++)
+            {
+                ret += ThirdSemester[i] + " | ";
+            }
+            ret = ret.Substring(0, ret.Length - 3) + "\n";
+
+            for (int i = 0; i < ForthSemster.Length; i++)
+            {
+                ret += ForthSemster[i] + " | ";
+            }
+            ret = ret.Substring(0, ret.Length - 3) + "\n";
+
+            for (int i = 0; i < FifthSemester.Length; i++)
+            {
+                ret += FifthSemester[i] + " | ";
+            }
+            ret = ret.Substring(0, ret.Length - 3) + "\n";
+
+            for (int i = 0; i < SixthSemester.Length; i++)
+            {
+                ret += SixthSemester[i] + " | ";
+            }
+            ret = ret.Substring(0, ret.Length - 3) + "\n";
+
+            for (int i = 0; i < SeventhSemester.Length; i++)
+            {
+                ret += SeventhSemester[i] + " | ";
+            }
+            ret = ret.Substring(0, ret.Length - 3) + "\n";
+
+            for (int i = 0; i < EighthSemester.Length; i++)
+            {
+                ret += EighthSemester[i] + " | ";
+            }
+            ret = ret.Substring(0, ret.Length - 3) + "\n";
+
+            var query = (from b in db.Users
+                         where b.Email == email
+                         select b).FirstOrDefault();
+
+            query.Plan = ret;
+            db.SaveChanges();
+
+            return Redirect("Result");
+        }
 
         private Class[] getClasses(Class[] masterList, string[] index)
         {
@@ -383,9 +526,11 @@ namespace FourYearPlan.Controllers
 
         }
 
+
+
     }
 }
-
+//rearrange http://www.blazonry.com/javascript/selmenu.php
 //int count = 0;
 //for(int i = 0; i < courses.Length; i++)
 //{
