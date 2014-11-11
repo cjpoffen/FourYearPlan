@@ -2,10 +2,11 @@
     ViewBag.Title = "sharePlan";
 }
 
-<h2>sharePlan</h2>
-
+<h2>Share Plan</h2>
+<br/>
+<br />
 @using (Html.BeginForm("sharePlan", "Home"))
-{
+{   <label for="username">Enter Username</label>
     <input name="username" />
     <button type="submit">Share</button>
 }

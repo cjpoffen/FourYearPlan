@@ -23,6 +23,10 @@ namespace FourYearPlan.Controllers
 
         public ActionResult Index()
         {
+            if (!loggedIn)
+            {
+                return Redirect("Home/Login");
+            }
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
             return View();
@@ -37,7 +41,6 @@ namespace FourYearPlan.Controllers
         [HttpPost]
         public ActionResult Login(string username, string password)
         {
-            canceledClass = "";
             var query = (from b in db.Users
                          where username == b.Email
                          select b).FirstOrDefault();
@@ -50,8 +53,7 @@ namespace FourYearPlan.Controllers
                     return Redirect("Admin");
                 }
                 if(query.Plan != null){
-                    breakDown = query.Plan.Split(new char[] { '\n' });
-                    checkCanceled();
+                    
                     return Redirect("Result");
                 }
                 return Redirect("FourYearPlan");
@@ -61,7 +63,12 @@ namespace FourYearPlan.Controllers
 
         [HttpGet]
         public ActionResult Admin()
-        {   
+        {
+            if (!loggedIn)
+            {
+                return Redirect("Login");
+            }
+
             var query = (from b in db.Course
                          select b);
             courses = query.ToArray();
@@ -78,6 +85,10 @@ namespace FourYearPlan.Controllers
         [HttpGet]
         public ActionResult EditCourse()
         {
+            if (!loggedIn)
+            {
+                return Redirect("Login");
+            }
             return View();
         }
 
@@ -297,8 +308,7 @@ namespace FourYearPlan.Controllers
         [HttpGet]
         public ActionResult SharedPlan()
         {
-
-            ViewBag.username = getUsernames();
+            ViewBag.username = getSharedPlanUsernames();
             return View();
         }
 
@@ -446,6 +456,7 @@ namespace FourYearPlan.Controllers
 
         private void checkCanceled()
         {
+            canceledClass = "";
             var query = from b in db.Course
                         where b.Cancelled == 1
                         select b;
@@ -501,7 +512,7 @@ namespace FourYearPlan.Controllers
             
         }
 
-        private string[] getUsernames()
+        private string[] getSharedPlanUsernames()
         {
             var query = (from b in db.Users
                         where b.Email == email
@@ -531,31 +542,3 @@ namespace FourYearPlan.Controllers
     }
 }
 //rearrange http://www.blazonry.com/javascript/selmenu.php
-//int count = 0;
-//for(int i = 0; i < courses.Length; i++)
-//{
-//    if(courses[i].Type == "REQ"){
-//        list[count] = masterList[i];
-//        count++;
-//    }
-//}
-//Class temp = list[10];
-//list[10] = list[29];
-//list[29] = temp;
-//string[] ind = {""};
-//if (se != null) ind = ind.Concat(se).ToArray();
-//if (tech != null) ind = ind.Concat(tech).ToArray();
-//if (math != null) ind = ind.Concat(math).ToArray();
-//if (suppl != null) ind = ind.Concat(suppl).ToArray();
-//if (econ != null) ind = ind.Concat(econ).ToArray();
-
-//for (int i = 1; i < ind.Length; i++)
-//{
-//    x = Convert.ToInt32(ind[i]);
-//    list[count] = masterList[x];
-//    count++;
-//}
-
-//PlanAlgorithm pa = new PlanAlgorithm(list.Length, 6);
-//pa.backtrack(new Class[list.Length + 1], 0, list, 1, 0, 'F');
-//var result = pa.getMinSemester();
